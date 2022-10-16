@@ -1,5 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+
 .App {
   text-align: center;
+  color: #fff;
 }
 
 .App-logo {
@@ -35,4 +39,129 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.product-selection {
+  display: grid;
+  /* background-color: #282c34; */
+  /* padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px; */
+  /* border: 1px dotted black; */
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+.product {
+  /* display: grid;
+  background-color: #282c34;
+  padding: 10px;
+  border-radius: 5px;
+  margin-top: 10px; */
+  border: 1px groove black;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background: #282c34;
+  box-shadow: rgba(3, 8, 20, 0.1) 0px 0.15rem 0.5rem,
+    rgba(2, 8, 20, 0.1) 0px 0.075rem 0.175rem;
+  height: 100%;
+  width: 100%;
+  border-radius: 4px;
+  transition: all 500ms;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #ced4da;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+.img {
+  grid-auto-rows: 10px;
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* .product-text {
+  color: white;
+} */
+
+a:link {
+  display: inline-block;
+  padding: 0.5em;
+  text-decoration: none;
+  color: #61dafb;
+}
+
+a:hover {
+  color: #f08080;
+}
+
+a:visited {
+  color: khaki;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: #2a2a2a;
+}
+
+li::marker {
+  color: antiquewhite;
+}
+
+ul {
+  margin: 0 auto;
+  text-align: center;
+}
+
+li {
+  display: inline-block;
+  vertical-align: top;
+}
+
+.search {
+  width: 95%;
+  border: 2px solid #000;
+  font-size: 1rem;
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.search:focus-within {
+  outline: auto solid #61dafb;
+  color: grey;
+  border-radius: 3px;
+}
+
+.search-button,
+.search-input {
+  background-color: hsl(0, 0%, 85%);
+  border: none;
+  outline: none;
+}
+
+.search-input {
+  padding: 1em;
+  width: 100%;
+  font-size: medium;
+  font-family: 'Kanit', sans-serif;
+}
+
+.search-button {
+  background: tomato;
+}
+
+.SearchBar {
+  background-color: hsl(210, 14%, 14%);
+  padding: 1em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
