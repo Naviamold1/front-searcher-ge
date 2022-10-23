@@ -1,5 +1,5 @@
-@import url('https://fonts.googleapis.com/css2?family=Kanit&display=swap');
-@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Kanit&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Comfortaa:wght@700&display=swap");
 
 .App {
   text-align: center;
@@ -43,21 +43,11 @@
 
 .product-selection {
   display: grid;
-  /* background-color: #282c34; */
-  /* padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px; */
-  /* border: 1px dotted black; */
   gap: 1rem;
   grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
 }
 
 .product {
-  /* display: grid;
-  background-color: #282c34;
-  padding: 10px;
-  border-radius: 5px;
-  margin-top: 10px; */
   border: 1px groove black;
   display: flex;
   flex-direction: column;
@@ -85,10 +75,6 @@
   max-height: 100%;
   object-fit: contain;
 }
-
-/* .product-text {
-  color: white;
-} */
 
 a:link {
   display: inline-block;
@@ -134,11 +120,11 @@ li {
   flex-flow: row nowrap;
 }
 
-.search:focus-within {
+/* .search:focus-within {
   outline: auto solid #61dafb;
   color: grey;
   border-radius: 3px;
-}
+} */
 
 .search-button,
 .search-input {
@@ -151,11 +137,12 @@ li {
   padding: 1em;
   width: 100%;
   font-size: medium;
-  font-family: 'Kanit', sans-serif;
+  font-family: "Kanit", sans-serif;
 }
 
-.search-button {
-  background: tomato;
+#search-button {
+  background: #474554;
+
 }
 
 .SearchBar {
@@ -164,4 +151,8 @@ li {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.return-text {
+  visibility: hidden;
 }

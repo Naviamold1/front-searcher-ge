@@ -6,6 +6,7 @@ import SearchIcon from "@mui/icons-material/Search";
 
 function Products(props) {
   return (
+    
     <div className="product">
       <div className="store product-text">
         <span className="store-name">{props.user.store}</span>
@@ -31,6 +32,7 @@ function Products(props) {
 export default function Search_Bar() {
   const [data, setData] = useState([]);
   const [input, setInput] = useState("");
+  const [error, setError] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
 
   useEffect(() => {
@@ -54,7 +56,7 @@ export default function Search_Bar() {
       console.log("error");
 
       setIsDisabled(false);
-      return <div>heq</div>;
+      setError({ message: "I'm an error message" })
     }
   };
 
@@ -75,10 +77,11 @@ export default function Search_Bar() {
           <IconButton
             aria-label="search"
             className="search-button"
+            id="search-button"
             onClick={() => getData()}
             disabled={isDisabled}
-            color='inherit'
-            sx={{backgroundColor:'#5a5a5a', borderRadius:'0'}}
+            color="primary"
+            sx={{ backgroundColor: "#5a5a5a", borderRadius: "0" }}
           >
             <SearchIcon />
           </IconButton>
@@ -92,7 +95,7 @@ export default function Search_Bar() {
           </LoadingButton> */}
         </form>
       </div>
-      <div>returned {data.length} products</div>
+      <div className="return-text">returned {data.length} products</div>
       <section className="product-selection">
         {data.map((user) => (
           <Products key={user.id} user={user}></Products>
