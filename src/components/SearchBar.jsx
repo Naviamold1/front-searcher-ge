@@ -3,6 +3,7 @@ import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { TextField, Grid, Button, IconButton } from "@mui/material/";
 import SearchIcon from "@mui/icons-material/Search";
+require('dotenv').config()
 
 function Products(props) {
   return (
@@ -46,7 +47,7 @@ export default function Search_Bar() {
     setIsDisabled(true);
     try {
       const requestData = await axios.post(
-        `http://127.0.0.1:8000/search-item/${input}`
+        `${process.env.REACT_APP_API_KEY}${input}`
       );
 
       setData(Object.values(await requestData.data));
