@@ -3,11 +3,9 @@ import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
 import { TextField, Grid, Button, IconButton } from "@mui/material/";
 import SearchIcon from "@mui/icons-material/Search";
-require('dotenv').config()
 
 function Products(props) {
   return (
-    
     <div className="product">
       <div className="store product-text">
         <span className="store-name">{props.user.store}</span>
@@ -46,10 +44,7 @@ export default function Search_Bar() {
   const getData = async () => {
     setIsDisabled(true);
     try {
-      const requestData = await axios.post(
-        `${process.env.REACT_APP_API_KEY}${input}`
-      );
-
+      const requestData = await axios.post(`${process.env.REACT_APP_API_KEY}/${input}`);
       setData(Object.values(await requestData.data));
       localStorage.setItem("user", JSON.stringify(data));
       setIsDisabled(false);
@@ -57,7 +52,7 @@ export default function Search_Bar() {
       console.log("error");
 
       setIsDisabled(false);
-      setError({ message: "I'm an error message" })
+      setError({ message: "I'm an error message" });
     }
   };
 
