@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
-import LoadingButton from "@mui/lab/LoadingButton";
-import { TextField, Grid, Button, IconButton } from "@mui/material/";
-import SearchIcon from "@mui/icons-material/Search";
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import LoadingButton from '@mui/lab/LoadingButton';
+import { IconButton } from '@mui/material/';
+import SearchIcon from '@mui/icons-material/Search';
+import MultipleSelectChip, { property } from './Output';
 
 function Products(props) {
   return (
@@ -18,7 +19,11 @@ function Products(props) {
       </div>
 
       <div className="price product-text">
-        <span className="price-name">{props.user.price} ₾</span>
+        <span className="price-name">
+          {props.user.price}
+          {' '}
+          ₾
+        </span>
       </div>
 
       <div className="div-img">
@@ -30,40 +35,50 @@ function Products(props) {
 
 export default function Search_Bar() {
   const [data, setData] = useState([]);
-  const [input, setInput] = useState("");
+  const [input, setInput] = useState('');
   const [error, setError] = useState({});
   const [isDisabled, setIsDisabled] = useState(false);
+  const [filter, setFilter] = useState('');
 
   useEffect(() => {
-    if (data !== "") {
+    if (data !== null) {
       console.log(data);
-      window.localStorage.setItem("MY_APP_STATE", JSON.stringify(data));
+      window.localStorage.setItem('MY_APP_STATE', JSON.stringify(data));
     }
   }, [data]);
+
+  if (property != null) {
+    setFilter(property)
+  }
 
   const getData = async () => {
     setIsDisabled(true);
     try {
-      const requestData = await axios.post(`${process.env.REACT_APP_API_KEY}/${input}`);
+      const options = {
+        method: 'post',
+        url: process.env.REACT_APP_API_KEY,
+        params: { item: input, store: filter},
+      };
+      const requestData = await axios.request(options);
       setData(Object.values(await requestData.data));
-      localStorage.setItem("user", JSON.stringify(data));
+      localStorage.setItem('user', JSON.stringify(data));
       setIsDisabled(false);
     } catch (err) {
-      console.log("error");
+      console.log('error');
 
       setIsDisabled(false);
       setError({ message: "I'm an error message" });
+      console.log(error);
     }
   };
 
   return (
     <>
       <div className="SearchBar">
-        <form className="search">
+        <form className="search" onSubmit={() => getData()}>
           <input
             className="search-input"
             label="Search Bar"
-            variant="filled"
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
@@ -77,24 +92,32 @@ export default function Search_Bar() {
             onClick={() => getData()}
             disabled={isDisabled}
             color="primary"
-            sx={{ backgroundColor: "#5a5a5a", borderRadius: "0" }}
+            sx={{ backgroundColor: '#5a5a5a', borderRadius: '0' }}
+            type="submit"
           >
             <SearchIcon />
           </IconButton>
           {isDisabled ? (
-            <LoadingButton loading variant="outlined"></LoadingButton>
+            <LoadingButton loading variant="outlined" />
           ) : (
-            ""
+            ''
           )}
           {/* <LoadingButton size="small" variant="outlined">
             disabled
           </LoadingButton> */}
+          <MultipleSelectChip />
         </form>
       </div>
-      <div className="return-text">returned {data.length} products</div>
+      <div className="return-text">
+        returned
+        {' '}
+        {data.length}
+        {' '}
+        products
+      </div>
       <section className="product-selection">
         {data.map((user) => (
-          <Products key={user.id} user={user}></Products>
+          <Products key={user.id} user={user} />
         ))}
       </section>
     </>
