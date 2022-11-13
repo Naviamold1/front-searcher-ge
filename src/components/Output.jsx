@@ -29,7 +29,6 @@ function getStyles(name, personName, theme) {
         : theme.typography.fontWeightMedium,
   };
 }
-export const [property, setProperty] = react.useRef()
 
 export default function MultipleSelectChip() {
   const theme = useTheme();
@@ -46,8 +45,8 @@ export default function MultipleSelectChip() {
   };
 
   return (
-    <div className="checktest">
-      <FormControl className="checktest" sx={{ m: 1, width: 300 }}>
+    <div className='checktest'>
+      <FormControl className='checktest' sx={{ m: 1, width: 300 }}>
         <InputLabel id='demo-multiple-chip-label'>Filter</InputLabel>
         <Select
           labelId='demo-multiple-chip-label'
@@ -70,7 +69,6 @@ export default function MultipleSelectChip() {
               key={name}
               value={name}
               style={getStyles(name, personName, theme)}
-              onClick={setProperty(name)}
             >
               {name}
             </MenuItem>
