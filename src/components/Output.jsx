@@ -1,12 +1,19 @@
 import react from "react";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
-import OutlinedInput from "@mui/material/OutlinedInput";
-import InputLabel from "@mui/material/InputLabel";
-import MenuItem from "@mui/material/MenuItem";
-import FormControl from "@mui/material/FormControl";
-import Select from "@mui/material/Select";
-import Chip from "@mui/material/Chip";
+import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
+import {
+  Box,
+  OutlinedInput,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Chip,
+  Button,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogTitle,
+} from "@mui/material/";
 
 const ITEM_HEIGHT = 48;
 const ITEM_PADDING_TOP = 8;
@@ -19,7 +26,7 @@ const MenuProps = {
   },
 };
 
-const names = ["Alta", "Elit Electronics", "Zoomer", "Adashop"];
+const stores = ["Alta", "Elit Electronics", "Zoomer", "Adashop", "test1"];
 
 function getStyles(name, personName, theme) {
   return {
@@ -30,51 +37,95 @@ function getStyles(name, personName, theme) {
   };
 }
 
-export default function MultipleSelectChip() {
+const darkTheme = createTheme({
+  palette: {
+    mode: "dark",
+  },
+});
+const MultipleSelectChip = ({ sendSearchResult }) => {
   const theme = useTheme();
-  const [personName, setPersonName] = react.useState([]);
+  const [open, setOpen] = react.useState(false);
+  const [storeFilter, setStoreFilter] = react.useState([]);
 
   const handleChange = (event) => {
     const {
       target: { value },
     } = event;
-    setPersonName(
+    setStoreFilter(
       // On autofill we get a stringified value.
       typeof value === "string" ? value.split(",") : value
     );
+    sendSearchResult(value);
+  };
+
+  const handleClickOpen = () => {
+    setOpen(true);
+  };
+
+  const handleClose = (event, reason) => {
+    if (reason !== "backdropClick") {
+      setOpen(false);
+    }
   };
 
   return (
-    <div className='checktest'>
-      <FormControl className='checktest' sx={{ m: 1, width: 300 }}>
-        <InputLabel id='demo-multiple-chip-label'>Filter</InputLabel>
-        <Select
-          labelId='demo-multiple-chip-label'
-          id='demo-multiple-chip'
-          multiple
-          value={personName}
-          onChange={handleChange}
-          input={<OutlinedInput id='select-multiple-chip' label='Chip' />}
-          renderValue={(selected) => (
-            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
-              {selected.map((value) => (
-                <Chip key={value} label={value} />
-              ))}
+    <div className='a'>
+      <ThemeProvider theme={darkTheme}>
+        <Button onClick={handleClickOpen} className='checktest'>
+          Filters
+        </Button>
+        <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
+          <DialogTitle>Filters</DialogTitle>
+          <DialogContent>
+            <Box component='form' sx={{ display: "flex", flexWrap: "wrap" }}>
+              <FormControl
+                className='checktest'
+                sx={{ m: 1, minWidth: 120, maxWidth: 300 }}
+              >
+                <InputLabel id='demo-multiple-chip-label'>Stores</InputLabel>
+                <Select
+                  labelId='demo-multiple-chip-label'
+                  id='demo-multiple-chip'
+                  multiple
+                  value={storeFilter}
+                  onChange={handleChange}
+                  input={
+                    <OutlinedInput id='select-multiple-chip' label='Chip' />
+                  }
+                  renderValue={(selected) => (
+                    <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+                      {selected.map((value) => (
+                        <Chip key={value} label={value} />
+                      ))}
+                    </Box>
+                  )}
+                  MenuProps={MenuProps}
+                >
+                  {stores.map((name) => (
+                    <MenuItem
+                      key={name}
+                      value={name}
+                      style={getStyles(name, storeFilter, theme)}
+                      id='filter-list'
+                    >
+                      {name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </FormControl>
             </Box>
-          )}
-          MenuProps={MenuProps}
-        >
-          {names.map((name) => (
-            <MenuItem
-              key={name}
-              value={name}
-              style={getStyles(name, personName, theme)}
-            >
-              {name}
-            </MenuItem>
-          ))}
-        </Select>
-      </FormControl>
+          </DialogContent>
+          <DialogActions>
+            <Button onClick={handleClose} sx={{ color: "error.main" }}>
+              Cancel
+            </Button>
+            <Button onClick={handleClose} sx={{ color: "success.main" }}>
+              Ok
+            </Button>
+          </DialogActions>
+        </Dialog>
+      </ThemeProvider>
     </div>
   );
-}
+};
+export default MultipleSelectChip;
