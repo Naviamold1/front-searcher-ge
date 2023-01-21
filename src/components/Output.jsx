@@ -1,4 +1,4 @@
-import react from "react";
+import React, { useState } from "react";
 import { useTheme, ThemeProvider, createTheme } from "@mui/material/styles";
 import {
   Box,
@@ -13,6 +13,9 @@ import {
   DialogActions,
   DialogContent,
   DialogTitle,
+  Checkbox,
+  FormGroup,
+  FormControlLabel,
 } from "@mui/material/";
 
 const ITEM_HEIGHT = 48;
@@ -42,10 +45,11 @@ const darkTheme = createTheme({
     mode: "dark",
   },
 });
-const MultipleSelectChip = ({ sendSearchResult }) => {
+const MultipleSelectChip = ({ sendSearchResult, onCheckBoxChange }) => {
   const theme = useTheme();
-  const [open, setOpen] = react.useState(false);
-  const [storeFilter, setStoreFilter] = react.useState([]);
+  const [open, setOpen] = useState(false);
+  const [storeFilter, setStoreFilter] = useState([]);
+  const [checked, setChecked] = useState(true);
 
   const handleChange = (event) => {
     const {
@@ -77,7 +81,14 @@ const MultipleSelectChip = ({ sendSearchResult }) => {
         <Dialog disableEscapeKeyDown open={open} onClose={handleClose}>
           <DialogTitle>Filters</DialogTitle>
           <DialogContent>
-            <Box component='form' sx={{ display: "flex", flexWrap: "wrap" }}>
+            <Box
+              component='form'
+              sx={{
+                display: "flex",
+                flexWrap: "wrap",
+                flexDirection: "column",
+              }}
+            >
               <FormControl
                 className='checktest'
                 sx={{ m: 1, minWidth: 120, maxWidth: 300 }}
@@ -112,6 +123,21 @@ const MultipleSelectChip = ({ sendSearchResult }) => {
                     </MenuItem>
                   ))}
                 </Select>
+              <FormGroup>
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={checked}
+                      onChange={(event) => {
+                        setChecked(event.target.checked);
+                        onCheckBoxChange(event.target.checked);
+                      }}
+                    />
+                  }
+                  label='Increased Accuracy (ADA)'
+                  sx={{ color: "lightgrey" }}
+                />
+              </FormGroup>
               </FormControl>
             </Box>
           </DialogContent>

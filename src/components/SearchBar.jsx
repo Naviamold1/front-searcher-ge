@@ -1,16 +1,29 @@
 import React, { useState } from "react";
 import axios from "axios";
 import LoadingButton from "@mui/lab/LoadingButton";
-import { IconButton } from "@mui/material/";
+import {
+  IconButton,
+  Alert,
+  Typography,
+  CardMedia,
+  CardContent,
+  Card,
+  Button,
+  CardActionArea,
+  CardActions,
+} from "@mui/material/";
 import SearchIcon from "@mui/icons-material/Search";
 import MultipleSelectChip from "./Output";
 import { useQuery } from "@tanstack/react-query";
+import ReactGA from "react-ga4";
 
 function Products(props) {
   return (
     <div className='product'>
       <div className='store product-text'>
-        <span className={`store-name ${props.user.store}`}>{props.user.store}</span>
+        <span className={`store-name ${props.user.store}`}>
+          {props.user.store}
+        </span>
       </div>
 
       <div className='name'>
@@ -27,18 +40,47 @@ function Products(props) {
         <img className='img' src={props.user.image} alt={props.user.name} />
       </div>
     </div>
+    //   <Card sx={{ maxWidth: 345 }}>
+    //   <CardActionArea>
+    //     <CardMedia
+    //       component="img"
+    //       height="140"
+    //       image={props.user.image}
+    //       alt={props.user.name}
+    //     />
+    //     <CardContent>
+    //       <Typography gutterBottom variant="h5" component="div">
+    //       {props.user.name}
+    //       </Typography>
+    //       {/* <Typography variant="body2" color="text.secondary">
+    //         Lizards are a widespread group of squamate reptiles, with over 6,000
+    //         species, ranging across all continents except Antarctica
+    //       </Typography> */}
+    //     </CardContent>
+    //   </CardActionArea>
+    //   <CardActions>
+    //     <Button size="small" color="primary">
+    //       Share
+    //     </Button>
+    //   </CardActions>
+    // </Card>
   );
 }
 
 export default function Search_Bar() {
   const [input, setInput] = useState("");
   const [storeFilter, setStoreFilter] = useState([]);
+  const [checked, setChecked] = useState(true);
 
   async function fetcha() {
     const options = {
       method: "POST",
       url: process.env.REACT_APP_API_KEY,
-      params: { item: input, store: Oppa === "" ? "all" : Oppa },
+      params: {
+        item: input,
+        store: Oppa === "" ? "all" : Oppa,
+        ada_accuracy: checked,
+      },
       data: {},
     };
     const res = await axios.request(options);
@@ -51,6 +93,11 @@ export default function Search_Bar() {
     Oppa = Oppa.slice(0, -1);
     console.log(Oppa);
     e.preventDefault();
+    ReactGA.event({
+      category: "Button",
+      action: "buttonClick",
+      label: "search-button",
+    });
     refetch();
   };
 
@@ -69,10 +116,10 @@ export default function Search_Bar() {
       <div className='SearchBar'>
         <form className='search' onSubmit={getData}>
           <MultipleSelectChip
-            storeFilter={storeFilter}
             sendSearchResult={(value) => {
               setStoreFilter(value);
             }}
+            onCheckBoxChange={(e) => setChecked(e)}
           />
           <input
             className='search-input'
@@ -111,10 +158,14 @@ export default function Search_Bar() {
         </form>
       </div>
       {data !== undefined ? (
-        <div className='return-text'>returned {data?.length} products</div>
+        <Alert variant='filled' severity='success'>
+          returned {data?.length} products
+        </Alert>
       ) : null}
       {isError ? (
-        <div className='error-text'>An error has occurred: {error.message}</div>
+        <Alert variant='filled' severity='error'>
+          An error has occurred: {error.message}
+        </Alert>
       ) : null}
       <section className='product-selection'>
         {data?.map((user) => (

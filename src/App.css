@@ -129,7 +129,7 @@ li {
 .search-button,
 .search-input {
   background-color: hsl(0, 0%, 85%);
-  border: none;
+  border: 1px solid #ccc;
   outline: none;
 }
 
@@ -178,6 +178,7 @@ li {
   );
   background-size: 100%;
   background-repeat: repeat;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
@@ -193,6 +194,7 @@ li {
   );
   background-size: 100%;
   background-repeat: repeat;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
@@ -208,6 +210,7 @@ li {
   );
   background-size: 100%;
   background-repeat: repeat;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
@@ -223,8 +226,17 @@ li {
   );
   background-size: 100%;
   background-repeat: repeat;
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   -moz-background-clip: text;
   -moz-text-fill-color: transparent;
+}
+
+.return-text {
+  background-color: hsl(220, 13%, 18%);
+  text-align: left;
+  display: inline-block;
+  /* position: relative; */
+
 }
